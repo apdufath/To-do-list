@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura — Luxury Focus & Task Management Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="theme-yellow">
+
+  <!-- DYNAMIC BACKGROUND GRID -->
+  <div class="bg-mesh">
+    <div class="mesh-glow y-glow"></div>
+    <div class="mesh-glow g-glow"></div>
+    <div class="mesh-noise"></div>
+  </div>
+
+  <!-- MAIN APP WRAPPER -->
+  <div class="app-wrapper">
+    
+    <!-- LEFT NAVIGATION SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <span></span>
+          AURA
+        </div>
+        <button class="mobile-close-btn" id="mobile-close-btn" aria-label="Close menu">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-link active" data-target="dashboard" aria-label="Dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          Dashboard
+        </button>
+        <button class="nav-link" data-target="tasks" aria-label="Tasks List">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          Tasks List
+        </button>
+        <button class="nav-link" data-target="kanban" aria-label="Kanban Board">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
+          Kanban Board
+        </button>
+        <button class="nav-link" data-target="calendar" aria-label="Calendar">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          Calendar View
+        </button>
+        <button class="nav-link" data-target="settings" aria-label="Settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          Settings
+        </button>
+      </nav>
+
+      <div class="sidebar-profile">
+        <div class="profile-avatar" id="sidebar-avatar">AC</div>
+        <div class="profile-info">
+          <span class="profile-name" id="sidebar-name">Alex Carter</span>
+          <span class="profile-role">Lead Producer</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+      
+      <!-- MOBILE HEADER BAR -->
+      <header class="mobile-header">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <span class="mobile-title" id="mobile-title">Dashboard</span>
+        <div class="profile-avatar avatar-sm" id="mobile-avatar">AC</div>
+      </header>
+
+      <!-- VIEW WRAPPER FOR VIEWS -->
+      <main class="views-wrapper" id="views-wrapper">
+        
+        <!-- PAGE 1 — DASHBOARD (HOME) -->
+        <section class="view active" id="view-dashboard">
+          <div class="dashboard-grid">
+            
+            <!-- Welcome banner -->
+            <div class="dash-welcome glass-card">
+              <div class="welcome-text">
+                <h2 class="welcome-title">Good Morning, <span id="dash-username">Alex</span> 👋</h2>
+                <p class="welcome-date" id="dash-current-date">Sunday, June 7</p>
+                <blockquote class="welcome-quote" id="dash-quote">"Focus is a muscle, and you are building it."</blockquote>
+              </div>
+              <div class="welcome-progress">
+                <div class="progress-ring-container">
+                  <svg class="progress-ring" width="100" height="100">
+                    <circle class="progress-ring-circle-bg" cx="50" cy="50" r="40"></circle>
+                    <circle class="progress-ring-circle" id="dash-progress-ring" cx="50" cy="50" r="40"></circle>
+                  </svg>
+                  <div class="progress-ring-text" id="dash-progress-percent">0%</div>
+                </div>
+                <span class="progress-ring-label">Daily Intentions</span>
+              </div>
+            </div>
+
+            <!-- Stats row -->
+            <div class="stats-row">
+              <div class="stat-card glass-card">
+                <div class="stat-icon-wrapper blue">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-label">Total Scope</span>
+                  <span class="stat-value" id="stat-total">0</span>
+                </div>
+              </div>
+              <div class="stat-card glass-card">
+                <div class="stat-icon-wrapper green">
+                  <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-label">Completed</span>
+                  <span class="stat-value" id="stat-completed">0</span>
+                </div>
+              </div>
+              <div class="stat-card glass-card">
+                <div class="stat-icon-wrapper yellow">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-label">In Progress</span>
+                  <span class="stat-value" id="stat-progress">0</span>
+                </div>
+              </div>
+              <div class="stat-card glass-card">
+                <div class="stat-icon-wrapper red">
+                  <svg viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-label">Overdue</span>
+                  <span class="stat-value" id="stat-overdue">0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Add and Today List -->
+            <div class="dash-list-section glass-card">
+              <div class="section-header">
+                <h3>Today's Focused Intentions</h3>
+                <span class="badge" id="dash-today-count">0 today</span>
+              </div>
+              
+              <div class="quick-add-bar">
+                <input type="text" id="dash-quick-input" placeholder="Quick capture an intention for today..." autocomplete="off">
+                <button id="dash-quick-btn" aria-label="Add today's task">
+                  <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+              </div>
+
+              <ul class="todo-list" id="dash-today-list">
+                <!-- Rendered Dynamically -->
+              </ul>
+              
+              <div class="empty-state" id="dash-empty-state" style="display: none;">
+                <div class="empty-icon-wrapper">
+                  <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                </div>
+                <p class="empty-title">All tasks completed for today!</p>
+                <p class="empty-subtitle">Great job remaining aligned and focused.</p>
+              </div>
+            </div>
+
+            <!-- Recent Activity Feed -->
+            <div class="dash-activity-section glass-card">
+              <div class="section-header">
+                <h3>Activity Feed</h3>
+              </div>
+              <ul class="activity-feed" id="activity-feed">
+                <!-- Rendered dynamically -->
+              </ul>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- PAGE 2 — TO-DO LIST -->
+        <section class="view" id="view-tasks">
+          <div class="tasks-page-header">
+            <h2>Focused Workspace</h2>
+            <button class="gradient-btn" id="open-add-modal-btn">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Add Task</span>
+            </button>
+          </div>
+
+          <!-- Filters, Search & Sort Panel -->
+          <div class="filters-panel glass-card">
+            <div class="search-sort-row">
+              <div class="search-box">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="task-search" placeholder="Filter tasks by name or tag...">
+              </div>
+              <div class="sort-box">
+                <span class="sort-label">Sort by:</span>
+                <select id="task-sort" class="glass-select">
+                  <option value="dueDate">Due Date</option>
+                  <option value="priority">Priority</option>
+                  <option value="title">Name</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="filter-tabs-row">
+              <div class="list-filters">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="active">Active</button>
+                <button class="filter-tab" data-filter="completed">Completed</button>
+              </div>
+              <button class="clear-btn" id="list-clear-btn">Clear Completed</button>
+            </div>
+          </div>
+
+          <!-- Staggered Full List -->
+          <div class="task-list-wrapper">
+            <ul class="todo-list full-list" id="full-todo-list">
+              <!-- Dynamically Populated Task Cards -->
+            </ul>
+            
+            <!-- Empty state for workspace -->
+            <div class="empty-state" id="workspace-empty-state" style="display: none;">
+              <div class="empty-icon-wrapper">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+              <p class="empty-title">No tasks found</p>
+              <p class="empty-subtitle">Try adjusting your filters or search terms.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAGE 3 — KANBAN BOARD -->
+        <section class="view" id="view-kanban">
+          <div class="tasks-page-header">
+            <h2>Interactive Kanban</h2>
+          </div>
+
+          <div class="kanban-board">
+            
+            <!-- Column 1: To Do -->
+            <div class="kanban-column glass-card" data-column="todo">
+              <div class="column-header border-yellow">
+                <div class="column-title">
+                  <span class="column-indicator yellow"></span>
+                  <h4>To Do</h4>
+                </div>
+                <span class="column-badge" id="badge-todo">0</span>
+              </div>
+              <div class="kanban-cards" id="kanban-todo">
+                <!-- Cards -->
+              </div>
+              <div class="inline-add-container">
+                <button class="inline-add-btn" data-column="todo">+ Add Card</button>
+                <div class="inline-input-box" style="display: none;">
+                  <input type="text" class="inline-add-input" placeholder="Type a task and hit Enter...">
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: In Progress -->
+            <div class="kanban-column glass-card" data-column="inprogress">
+              <div class="column-header border-blue">
+                <div class="column-title">
+                  <span class="column-indicator blue"></span>
+                  <h4>In Progress</h4>
+                </div>
+                <span class="column-badge" id="badge-inprogress">0</span>
+              </div>
+              <div class="kanban-cards" id="kanban-inprogress">
+                <!-- Cards -->
+              </div>
+              <div class="inline-add-container">
+                <button class="inline-add-btn" data-column="inprogress">+ Add Card</button>
+                <div class="inline-input-box" style="display: none;">
+                  <input type="text" class="inline-add-input" placeholder="Type a task and hit Enter...">
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3: Review -->
+            <div class="kanban-column glass-card" data-column="review">
+              <div class="column-header border-purple">
+                <div class="column-title">
+                  <span class="column-indicator purple"></span>
+                  <h4>Review</h4>
+                </div>
+                <span class="column-badge" id="badge-review">0</span>
+              </div>
+              <div class="kanban-cards" id="kanban-review">
+                <!-- Cards -->
+              </div>
+              <div class="inline-add-container">
+                <button class="inline-add-btn" data-column="review">+ Add Card</button>
+                <div class="inline-input-box" style="display: none;">
+                  <input type="text" class="inline-add-input" placeholder="Type a task and hit Enter...">
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 4: Done -->
+            <div class="kanban-column glass-card" data-column="done">
+              <div class="column-header border-green">
+                <div class="column-title">
+                  <span class="column-indicator green"></span>
+                  <h4>Done</h4>
+                </div>
+                <span class="column-badge" id="badge-done">0</span>
+              </div>
+              <div class="kanban-cards" id="kanban-done">
+                <!-- Cards -->
+              </div>
+              <div class="inline-add-container">
+                <button class="inline-add-btn" data-column="done">+ Add Card</button>
+                <div class="inline-input-box" style="display: none;">
+                  <input type="text" class="inline-add-input" placeholder="Type a task and hit Enter...">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- PAGE 4 — CALENDAR VIEW -->
+        <section class="view" id="view-calendar">
+          <div class="calendar-page-layout">
+            
+            <!-- Left Side: Calendar Grid -->
+            <div class="calendar-main glass-card">
+              <div class="calendar-header">
+                <button class="cal-nav-btn" id="cal-prev-btn" aria-label="Previous month">
+                  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <h3 class="calendar-month-year" id="cal-month-year">June 2026</h3>
+                <button class="cal-nav-btn" id="cal-next-btn" aria-label="Next month">
+                  <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </div>
+              
+              <div class="calendar-grid">
+                <!-- Days of the week headers -->
+                <div class="cal-day-name">Sun</div>
+                <div class="cal-day-name">Mon</div>
+                <div class="cal-day-name">Tue</div>
+                <div class="cal-day-name">Wed</div>
+                <div class="cal-day-name">Thu</div>
+                <div class="cal-day-name">Fri</div>
+                <div class="cal-day-name">Sat</div>
+                
+                <!-- Dynamically generated calendar cells -->
+                <div class="calendar-days-container" id="calendar-days-container"></div>
+              </div>
+            </div>
+
+            <!-- Right Side: Selected Day Tasks Detail Panel -->
+            <aside class="calendar-panel glass-card">
+              <div class="panel-header">
+                <h4 id="cal-selected-date-label">June 7, 2026</h4>
+                <p class="panel-subtitle">Due intentions</p>
+              </div>
+              <ul class="todo-list" id="cal-panel-list">
+                <!-- Selected day tasks list -->
+              </ul>
+              <div class="empty-state" id="cal-panel-empty" style="display: none;">
+                <div class="empty-icon-wrapper">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <p class="empty-title">Clean schedule</p>
+                <p class="empty-subtitle">No intentions due on this day.</p>
+              </div>
+            </aside>
+
+          </div>
+        </section>
+
+        <!-- PAGE 5 — SETTINGS -->
+        <section class="view" id="view-settings">
+          <div class="settings-grid">
+            
+            <!-- Section: Profile Settings -->
+            <div class="settings-card glass-card">
+              <h3>Profile Identity</h3>
+              <p class="settings-description">Configure your focus workspace metadata.</p>
+              <div class="settings-form">
+                <div class="form-group">
+                  <label for="set-username">Username</label>
+                  <input type="text" id="set-username" placeholder="Enter name...">
+                </div>
+                <div class="form-group">
+                  <label for="set-email">Email Address</label>
+                  <input type="email" id="set-email" placeholder="Enter email...">
+                </div>
+                <div class="form-group">
+                  <label for="set-role">Workspace Role</label>
+                  <input type="text" id="set-role" placeholder="e.g. Lead Producer...">
+                </div>
+                <button class="gradient-btn" id="save-profile-btn">Save Identity</button>
+              </div>
+            </div>
+
+            <!-- Section: Appearance Settings -->
+            <div class="settings-card glass-card">
+              <h3>Visual Aesthetics</h3>
+              <p class="settings-description">Tailor your glass layout theme defaults.</p>
+              <div class="settings-form">
+                
+                <!-- Toggle Switches -->
+                <div class="toggle-row">
+                  <div class="toggle-label-group">
+                    <span class="toggle-title">Permanent Dark Canvas</span>
+                    <span class="toggle-subtitle">Always keep background mesh dark and contrastive.</span>
+                  </div>
+                  <label class="glass-switch">
+                    <input type="checkbox" id="set-darkmode" checked disabled>
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-row">
+                  <div class="toggle-label-group">
+                    <span class="toggle-title">System Sounds</span>
+                    <span class="toggle-subtitle">Play subtle micro-clicks on task toggle.</span>
+                  </div>
+                  <label class="glass-switch">
+                    <input type="checkbox" id="set-sounds">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+
+                <!-- Color picker -->
+                <div class="form-group">
+                  <label>Brand Accent Color</label>
+                  <div class="accent-picker-row">
+                    <label class="accent-option">
+                      <input type="radio" name="accent-color" value="yellow" checked>
+                      <span class="accent-dot select-yellow"></span>
+                      Vivid Yellow
+                    </label>
+                    <label class="accent-option">
+                      <input type="radio" name="accent-color" value="green">
+                      <span class="accent-dot select-green"></span>
+                      Fresh Green
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Section: Data and System Control -->
+            <div class="settings-card glass-card span-columns">
+              <h3>Workspace Core Data</h3>
+              <p class="settings-description">Export your project profile or clear active storage records.</p>
+              <div class="settings-data-actions">
+                <div class="data-action-item">
+                  <div class="action-text">
+                    <h5>Backup Workspace Data</h5>
+                    <p>Compile all tasks, lists, settings, and histories into a backup JSON file.</p>
+                  </div>
+                  <button class="glass-action-btn" id="btn-export-data">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Export JSON
+                  </button>
+                </div>
+                
+                <div class="data-action-item">
+                  <div class="action-text">
+                    <h5>Purge Active Workspaces</h5>
+                    <p>Permanently erase all tasks, columns, and profile configurations. This cannot be undone.</p>
+                  </div>
+                  <button class="danger-btn" id="btn-purge-data">
+                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Clear Workspace
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- TASK MODAL (ADD & EDIT) -->
+  <div class="modal-overlay" id="task-modal">
+    <div class="modal-container glass-card">
+      <div class="modal-header">
+        <h3 id="modal-title">Establish Intention</h3>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      
+      <form class="modal-form" id="modal-form" onsubmit="event.preventDefault();">
+        <input type="hidden" id="modal-task-id">
+        
+        <div class="form-group">
+          <label for="modal-input-title">Task Intention *</label>
+          <input type="text" id="modal-input-title" placeholder="What are you focusing on?" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="modal-input-description">Context & Details</label>
+          <textarea id="modal-input-description" rows="3" placeholder="Add details or context for this scope..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="modal-input-priority">Priority</label>
+            <select id="modal-input-priority" class="glass-select">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label for="modal-input-category">Category</label>
+            <select id="modal-input-category" class="glass-select">
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="Design">Design</option>
+              <option value="Health">Health</option>
+              <option value="Finance">Finance</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="modal-input-date">Due Date</label>
+            <input type="date" id="modal-input-date" required>
+          </div>
+          <div class="form-group flex-1">
+            <label for="modal-input-assignee">Assignee Initials</label>
+            <input type="text" id="modal-input-assignee" placeholder="e.g. AC" maxlength="3">
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="glass-action-btn" id="modal-cancel-btn">Cancel</button>
+          <button type="submit" class="gradient-btn" id="modal-submit-btn">Save Intention</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+</body>
+</html>
