@@ -57,6 +57,11 @@
   padding: 0;
 }
 
+ul, ol { list-style: none; }
+a { text-decoration: none; color: inherit; }
+button { -webkit-appearance: none; appearance: none; text-decoration: none; }
+
+
 body {
   background-color: var(--bg-base);
   color: var(--text-main);
@@ -869,8 +874,21 @@ body {
 
 .list-filters {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Hard browser-reset for button elements inside list-filters */
+.list-filters button,
+.list-filters .filter-tab {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 .list-filters .filter-tab {
@@ -878,20 +896,24 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: rgba(255, 255, 255, 0.025);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.48) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
   font-family: var(--font-family);
   font-size: 0.82rem;
   font-weight: 500;
-  padding: 7px 15px;
+  padding: 7px 16px;
   border-radius: 100px;
   cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  -webkit-appearance: none;
   transition: background 0.28s ease, border-color 0.28s ease,
               color 0.28s ease, box-shadow 0.28s ease, transform 0.2s ease,
               filter 0.2s ease;
   user-select: none;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .list-filters .filter-tab:hover {
@@ -904,14 +926,14 @@ body {
 }
 
 .list-filters .filter-tab.active {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  border-color: transparent;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%) !important;
+  border-color: transparent !important;
   color: #0A0F1E !important;
   font-weight: 700;
   box-shadow:
-    0 4px 18px rgba(var(--color-primary-rgb), 0.38),
-    0 0 24px rgba(var(--color-primary-rgb), 0.18),
-    0 1px 6px rgba(var(--color-secondary-rgb), 0.22);
+    0 4px 18px rgba(var(--color-primary-rgb), 0.45),
+    0 0 28px rgba(var(--color-primary-rgb), 0.20),
+    0 1px 6px rgba(var(--color-secondary-rgb), 0.25);
   filter: none;
   transform: translateY(0);
   animation: tabActivePop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1110,10 +1132,11 @@ body {
   color: rgba(255, 255, 255, 0.95);
   font-size: 0.92rem;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
   word-break: break-word;
   position: relative;
   display: inline-block;
+  overflow: hidden;
 }
 
 .todo-item.completed .todo-text {
@@ -2254,9 +2277,9 @@ div::-webkit-scrollbar-thumb:hover {
   .list-filters {
     width: 100%;
   }
-  .filter-tab {
+  .list-filters .filter-tab {
     font-size: 0.75rem;
-    padding: 6px 4px;
+    padding: 6px 12px;
   }
   .welcome-title {
     font-size: 1.5rem;
