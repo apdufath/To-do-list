@@ -26,11 +26,17 @@
           <span></span>
           AURA
         </div>
-        <button class="mobile-close-btn" id="mobile-close-btn" aria-label="Close menu">
-          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+        <div class="brand-actions">
+          <button class="theme-toggle-btn" id="theme-toggle-sidebar" aria-label="Toggle theme" data-tooltip="Toggle light/dark">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button class="mobile-close-btn" id="mobile-close-btn" aria-label="Close menu">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
       </div>
-
+      
       <nav class="sidebar-nav">
         <button class="nav-link active" data-target="dashboard" aria-label="Dashboard">
           <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
@@ -55,9 +61,9 @@
       </nav>
 
       <div class="sidebar-profile">
-        <div class="profile-avatar" id="sidebar-avatar">AC</div>
+        <div class="profile-avatar" id="sidebar-avatar">AB</div>
         <div class="profile-info">
-          <span class="profile-name" id="sidebar-name">Alex Carter</span>
+          <span class="profile-name" id="sidebar-name">Abdifatah Bashe</span>
           <span class="profile-role">Lead Producer</span>
         </div>
       </div>
@@ -72,7 +78,13 @@
           <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         <span class="mobile-title" id="mobile-title">Dashboard</span>
-        <div class="profile-avatar avatar-sm" id="mobile-avatar">AC</div>
+        <div class="mobile-header-actions" style="display: flex; align-items: center; gap: 12px;">
+          <button class="theme-toggle-btn" id="theme-toggle-mobile" aria-label="Toggle theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <div class="profile-avatar avatar-sm" id="mobile-avatar">AB</div>
+        </div>
       </header>
 
       <!-- VIEW WRAPPER FOR VIEWS -->
@@ -85,7 +97,7 @@
             <!-- Welcome banner -->
             <div class="dash-welcome glass-card">
               <div class="welcome-text">
-                <h2 class="welcome-title">Good Morning, <span id="dash-username">Alex</span> 👋</h2>
+                <h2 class="welcome-title">Good Morning, <span id="dash-username">Abdifatah</span> 👋</h2>
                 <p class="welcome-date" id="dash-current-date">Sunday, June 7</p>
                 <blockquote class="welcome-quote" id="dash-quote">"Focus is a muscle, and you are building it."</blockquote>
               </div>
@@ -412,11 +424,11 @@
                 <!-- Toggle Switches -->
                 <div class="toggle-row">
                   <div class="toggle-label-group">
-                    <span class="toggle-title">Permanent Dark Canvas</span>
-                    <span class="toggle-subtitle">Always keep background mesh dark and contrastive.</span>
+                    <span class="toggle-title">Dark Mode Theme</span>
+                    <span class="toggle-subtitle">Switch between dark and light glass canvases.</span>
                   </div>
                   <label class="glass-switch">
-                    <input type="checkbox" id="set-darkmode" checked disabled>
+                    <input type="checkbox" id="set-darkmode" checked>
                     <span class="switch-slider"></span>
                   </label>
                 </div>

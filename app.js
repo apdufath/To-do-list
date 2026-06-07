@@ -134,11 +134,12 @@ let calSelectedDate = new Date();
 
 // Settings Defaults
 let settings = {
-  username: "Alex Carter",
-  email: "alex@aurasystem.co",
+  username: "Abdifatah Bashe",
+  email: "abdifatah@aurasystem.co",
   role: "Lead Producer",
   sounds: true,
-  accentColor: "yellow"
+  accentColor: "yellow",
+  darkMode: true
 };
 
 // ==========================================================================
@@ -187,6 +188,7 @@ const btnPurgeData = document.getElementById('btn-purge-data');
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
   applyAccentTheme();
+  applyThemeMode();
   setupRouting();
   setupEventListeners();
   setupDragAndDrop();
@@ -220,6 +222,12 @@ function loadData() {
   if (storedSettings) {
     try {
       settings = { ...settings, ...JSON.parse(storedSettings) };
+      // Migration from placeholder username
+      if (settings.username === "Alex Carter") {
+        settings.username = "Abdifatah Bashe";
+        settings.email = "abdifatah@aurasystem.co";
+        saveSettings();
+      }
     } catch (e) { }
   } else {
     saveSettings();
@@ -230,6 +238,8 @@ function loadData() {
   setEmail.value = settings.email;
   setRole.value = settings.role;
   setSounds.checked = settings.sounds;
+  const setDarkmode = document.getElementById('set-darkmode');
+  if (setDarkmode) setDarkmode.checked = settings.darkMode !== false;
   const radio = document.querySelector(`input[name="accent-color"][value="${settings.accentColor}"]`);
   if (radio) radio.checked = true;
 
@@ -336,6 +346,30 @@ function applyAccentTheme() {
   const dot = document.querySelector('.brand-logo span');
   if (dot) {
     dot.style.boxShadow = `0 0 10px var(--color-primary)`;
+  }
+}
+
+function applyThemeMode() {
+  const isDark = settings.darkMode !== false;
+  
+  if (isDark) {
+    document.body.classList.remove('light-mode');
+  } else {
+    document.body.classList.add('light-mode');
+  }
+  
+  const checkbox = document.getElementById('set-darkmode');
+  if (checkbox) checkbox.checked = isDark;
+  
+  const sunIcons = document.querySelectorAll('.theme-toggle-btn .sun-icon');
+  const moonIcons = document.querySelectorAll('.theme-toggle-btn .moon-icon');
+  
+  if (isDark) {
+    sunIcons.forEach(el => el.style.display = 'none');
+    moonIcons.forEach(el => el.style.display = 'block');
+  } else {
+    sunIcons.forEach(el => el.style.display = 'block');
+    moonIcons.forEach(el => el.style.display = 'none');
   }
 }
 
@@ -1365,6 +1399,32 @@ function setupEventListeners() {
     saveSettings();
     showToast(`Sounds ${settings.sounds ? 'enabled' : 'disabled'}`, 'info');
   });
+
+  // Settings: Dark Mode toggler
+  const setDarkmode = document.getElementById('set-darkmode');
+  if (setDarkmode) {
+    setDarkmode.addEventListener('change', (e) => {
+      settings.darkMode = e.target.checked;
+      saveSettings();
+      applyThemeMode();
+      logActivity(`Switched theme to ${settings.darkMode ? 'Dark' : 'Light'} Mode`, 'info');
+      showToast(`${settings.darkMode ? 'Dark' : 'Light'} Mode active`, 'info');
+    });
+  }
+
+  // Sidebar & Mobile Header quick toggles
+  const toggleTheme = () => {
+    settings.darkMode = settings.darkMode === false;
+    saveSettings();
+    applyThemeMode();
+    logActivity(`Switched theme to ${settings.darkMode ? 'Dark' : 'Light'} Mode`, 'info');
+    showToast(`${settings.darkMode ? 'Dark' : 'Light'} Mode active`, 'info');
+  };
+
+  const btnSidebar = document.getElementById('theme-toggle-sidebar');
+  const btnMobile = document.getElementById('theme-toggle-mobile');
+  if (btnSidebar) btnSidebar.addEventListener('click', toggleTheme);
+  if (btnMobile) btnMobile.addEventListener('click', toggleTheme);
 
   // Settings: Data management hooks
   btnExportData.addEventListener('click', exportTasksJSON);
