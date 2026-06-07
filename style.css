@@ -840,11 +840,155 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(15, 22, 38, 0.4);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom-color: rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+  padding: 12px 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  position: relative;
+  margin-bottom: 2.25rem;
+}
+
+.filter-tabs-row::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 4%;
+  right: 4%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
 }
 
 .list-filters {
   display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.list-filters .filter-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-family: var(--font-family);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  user-select: none;
+}
+
+.list-filters .filter-tab:hover {
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.03);
+}
+
+.list-filters .filter-tab.active {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  border-color: transparent;
+  color: #0A0F1E !important;
+  font-weight: 700;
+  box-shadow: var(--shadow-btn);
+}
+
+.list-filters .filter-tab::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #0A0F1E;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.list-filters .filter-tab.active::after {
+  transform: translateX(-50%) scale(1);
+}
+
+.list-filters .tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 100px;
+  padding: 1px 6px;
+  min-width: 18px;
+  transition: all 0.3s ease;
+}
+
+.list-filters .filter-tab:hover .tab-badge {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.list-filters .filter-tab.active .tab-badge {
+  background: rgba(10, 15, 30, 0.15);
+  color: #0A0F1E;
+  font-weight: 700;
+}
+
+.filter-tabs-row .clear-btn {
+  display: inline-flex;
+  align-items: center;
   gap: 6px;
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: var(--color-danger);
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(3px);
+}
+
+.filter-tabs-row .clear-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.filter-tabs-row .clear-btn:hover {
+  color: #FFF !important;
+  background: var(--color-danger);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+  transform: scale(1.03);
+}
+
+.filter-tabs-row .clear-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  transition: stroke 0.25s ease;
+}
+
+.filter-tabs-row .clear-btn:hover svg {
+  stroke: #FFF;
 }
 
 /* Staggered Full List */
@@ -2298,4 +2442,56 @@ textarea {
 .light-mode .g-glow {
   background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
 }
+
+.light-mode .filter-tabs-row {
+  background: rgba(255, 255, 255, 0.45);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.light-mode .filter-tabs-row::after {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08), transparent);
+}
+
+.light-mode .list-filters .filter-tab {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: rgba(31, 41, 55, 0.6) !important;
+}
+
+.light-mode .list-filters .filter-tab:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: rgba(31, 41, 55, 0.95) !important;
+}
+
+.light-mode .list-filters .filter-tab.active {
+  color: #0A0F1E !important;
+  border-color: transparent;
+}
+
+.light-mode .list-filters .tab-badge {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(31, 41, 55, 0.6);
+}
+
+.light-mode .list-filters .filter-tab:hover .tab-badge {
+  background: rgba(0, 0, 0, 0.1);
+  color: rgba(31, 41, 55, 0.85);
+}
+
+.light-mode .list-filters .filter-tab.active .tab-badge {
+  background: rgba(0, 0, 0, 0.12);
+  color: #0A0F1E;
+}
+
+.light-mode .filter-tabs-row .clear-btn {
+  border-color: rgba(239, 68, 68, 0.35);
+  color: var(--color-danger) !important;
+}
+
+.light-mode .filter-tabs-row .clear-btn:hover {
+  color: #FFF !important;
+}
+
 

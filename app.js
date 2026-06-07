@@ -604,6 +604,27 @@ function renderActivityFeed() {
 function renderTasksList() {
   fullTodoList.innerHTML = '';
   
+  // Update filter badges counts based on search query
+  let totalTasks = tasks;
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    totalTasks = tasks.filter(task => 
+      task.title.toLowerCase().includes(q) || 
+      task.category.toLowerCase().includes(q) ||
+      (task.description && task.description.toLowerCase().includes(q))
+    );
+  }
+  const countAll = totalTasks.length;
+  const countActive = totalTasks.filter(t => !t.completed).length;
+  const countCompleted = totalTasks.filter(t => t.completed).length;
+
+  const bAll = document.getElementById('badge-count-all');
+  const bActive = document.getElementById('badge-count-active');
+  const bCompleted = document.getElementById('badge-count-completed');
+  if (bAll) bAll.textContent = countAll;
+  if (bActive) bActive.textContent = countActive;
+  if (bCompleted) bCompleted.textContent = countCompleted;
+
   // 1. Filter Tasks
   let filtered = tasks.filter(task => {
     if (currentFilter === 'active') return !task.completed;
