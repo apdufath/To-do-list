@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aura — Luxury Focus & Task Management Dashboard</title>
-  <link rel="stylesheet" href="style.css?v=20260607b">
-  <script src="app.js?v=20260607b" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260607c">
+  <script src="app.js?v=20260607c" defer></script>
 </head>
 <body class="theme-yellow">
 
@@ -150,6 +150,46 @@
                   <span class="stat-label">Overdue</span>
                   <span class="stat-value" id="stat-overdue">0</span>
                 </div>
+              </div>
+            </div>
+
+            <!-- Iron Will Streak Widget -->
+            <div class="dash-streak glass-card" id="streak-widget">
+              <!-- Left: Flame + Count + 7-day history -->
+              <div class="streak-left">
+                <div class="streak-header">
+                  <div class="streak-flame-icon">🔥</div>
+                  <div class="streak-info">
+                    <div class="streak-count" id="streak-count">0 <span>Days</span></div>
+                    <div class="streak-label">Iron Will Streak — Keep it going!</div>
+                    <div class="streak-message" id="streak-message">Start your streak today!</div>
+                  </div>
+                </div>
+                <div class="streak-days-row" id="streak-days-row">
+                  <!-- Rendered dynamically by JS -->
+                </div>
+              </div>
+
+              <!-- Right: Milestone progress ring -->
+              <div class="streak-right">
+                <div class="streak-progress-container">
+                  <svg class="streak-ring" width="90" height="90" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="streak-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FFD700"></stop>
+                        <stop offset="100%" stop-color="#FF8C00"></stop>
+                      </linearGradient>
+                    </defs>
+                    <circle class="streak-ring-bg" cx="45" cy="45" r="36"></circle>
+                    <circle class="streak-ring-fg" id="streak-ring-fg" cx="45" cy="45" r="36"></circle>
+                  </svg>
+                  <div class="streak-ring-inner">
+                    <span class="streak-next-label">Next</span>
+                    <span class="streak-next-num" id="streak-next-milestone">7</span>
+                    <span class="streak-next-unit">days</span>
+                  </div>
+                </div>
+                <div class="streak-milestone-label" id="streak-milestone-label">Goal: 7-Day Streak</div>
               </div>
             </div>
 

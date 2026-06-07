@@ -4,6 +4,7 @@
 const STORAGE_TASKS_KEY = 'aura_focus_tasks';
 const STORAGE_SETTINGS_KEY = 'aura_focus_settings';
 const STORAGE_ACTIVITY_KEY = 'aura_focus_activity';
+const STORAGE_STREAK_KEY   = 'aura_iron_will_streak';
 
 // Dynamic Date Helpers to keep sample data relative and fresh
 const formatDate = (date) => {
@@ -123,6 +124,7 @@ const quotes = [
 // App Core State
 let tasks = [];
 let activityLog = [];
+let streak = { count: 0, lastActiveDate: null, history: [] };
 let currentFilter = 'all';
 let currentSort = 'dueDate';
 let searchQuery = '';
@@ -258,6 +260,7 @@ function loadData() {
 
   // Apply user metadata to HTML
   updateProfileDisplays();
+  loadStreak();
 }
 
 function saveTasks() {
@@ -271,6 +274,147 @@ function saveSettings() {
 function saveActivity() {
   localStorage.setItem(STORAGE_ACTIVITY_KEY, JSON.stringify(activityLog));
 }
+
+// ==========================================================================
+// IRON WILL STREAK ENGINE
+// ==========================================================================
+function loadStreak() {
+  const stored = localStorage.getItem(STORAGE_STREAK_KEY);
+  if (stored) {
+    try { streak = { count: 0, lastActiveDate: null, history: [], ...JSON.parse(stored) }; }
+    catch(e) { streak = { count: 0, lastActiveDate: null, history: [] }; }
+  }
+
+  // Validate streak against today — reset if a day was missed
+  if (streak.lastActiveDate) {
+    const todayStr     = formatDate(new Date());
+    const yd = new Date(); yd.setDate(yd.getDate() - 1);
+    const yesterdayStr = formatDate(yd);
+    if (streak.lastActiveDate !== todayStr && streak.lastActiveDate !== yesterdayStr) {
+      streak.count = 0;
+      streak.history = [];
+      saveStreak();
+    }
+  }
+}
+
+function saveStreak() {
+  localStorage.setItem(STORAGE_STREAK_KEY, JSON.stringify(streak));
+}
+
+function updateStreakOnCompletion() {
+  const todayStr = formatDate(new Date());
+  if (streak.lastActiveDate === todayStr) return; // already counted today
+
+  const yd = new Date(); yd.setDate(yd.getDate() - 1);
+  const yesterdayStr = formatDate(yd);
+
+  if (streak.lastActiveDate === null || streak.lastActiveDate === yesterdayStr) {
+    streak.count = (streak.count || 0) + 1;   // continue or start
+  } else {
+    streak.count   = 1;                        // gap detected — reset to 1
+    streak.history = [];
+  }
+
+  streak.lastActiveDate = todayStr;
+
+  if (!streak.history.includes(todayStr)) {
+    streak.history.push(todayStr);
+    const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 6);
+    const cutoffStr = formatDate(cutoff);
+    streak.history = streak.history.filter(d => d >= cutoffStr);
+  }
+
+  saveStreak();
+  renderStreak();
+}
+
+function getStreakMessage(count) {
+  if (count === 0) return "Start your streak today!";
+  if (count <= 3)  return "Good start, build the habit!";
+  if (count <= 6)  return "You're on fire, don't stop!";
+  if (count <= 13) return "One week strong \u{1F4AA}";
+  if (count <= 29) return "Unstoppable! Keep pushing!";
+  return "IRON WILL ACHIEVED \u{1F3C6}";
+}
+
+function getNextMilestone(count) {
+  return [7, 14, 30, 60, 100].find(m => count < m) || 100;
+}
+
+function getPrevMilestone(count) {
+  return [0, 7, 14, 30, 60, 100].reduceRight((found, m) =>
+    (found === -1 && count >= m) ? m : found, -1);
+}
+
+function animateStreakCount(el, target) {
+  const duration = 900;
+  const start = Date.now();
+  const tick = () => {
+    const t      = Math.min((Date.now() - start) / duration, 1);
+    const eased  = 1 - Math.pow(1 - t, 3); // ease-out cubic
+    const current = Math.round(target * eased);
+    el.innerHTML = `${current} <span>Days</span>`;
+    if (t < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function renderStreak() {
+  const countEl   = document.getElementById('streak-count');
+  const msgEl     = document.getElementById('streak-message');
+  const daysEl    = document.getElementById('streak-days-row');
+  const ringFg    = document.getElementById('streak-ring-fg');
+  const nextNumEl = document.getElementById('streak-next-milestone');
+  const mileLabel = document.getElementById('streak-milestone-label');
+  if (!countEl) return;
+
+  // Count-up animation
+  animateStreakCount(countEl, streak.count);
+
+  // Motivational message
+  if (msgEl) msgEl.textContent = getStreakMessage(streak.count);
+
+  // 7-day history circles
+  if (daysEl) {
+    daysEl.innerHTML = '';
+    const todayStr = formatDate(new Date());
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const dateStr  = formatDate(d);
+      const isActive = streak.history.includes(dateStr);
+      const isToday  = dateStr === todayStr;
+
+      const circle = document.createElement('div');
+      circle.className = `streak-day-circle${isActive ? ' active' : ''}${isToday ? ' today' : ''}`;
+      circle.style.setProperty('--delay', `${(6 - i) * 0.07}s`);
+
+      const dot = document.createElement('div');
+      dot.className = 'streak-day-dot';
+
+      const label = document.createElement('span');
+      label.className = 'streak-day-label';
+      label.textContent = d.toLocaleDateString('en-US', { weekday: 'short' }).charAt(0);
+
+      circle.appendChild(dot);
+      circle.appendChild(label);
+      daysEl.appendChild(circle);
+    }
+  }
+
+  // Milestone progress ring
+  const next = getNextMilestone(streak.count);
+  const prev = Math.max(0, getPrevMilestone(streak.count));
+  const progress = next === prev ? 1 : Math.min(1, (streak.count - prev) / (next - prev));
+  if (ringFg) {
+    const circ = 2 * Math.PI * 36; // r=36 → 226.19
+    ringFg.style.strokeDasharray  = `${circ} ${circ}`;
+    ringFg.style.strokeDashoffset = circ - progress * circ;
+  }
+  if (nextNumEl) nextNumEl.textContent = next;
+  if (mileLabel) mileLabel.textContent = `Goal: ${next}-Day Streak`;
+}
+
 
 function logActivity(text, type = 'info') {
   activityLog.unshift({ text, type, time: Date.now() });
@@ -539,6 +683,7 @@ function renderDashboard() {
   // Update metrics
   calculateStats();
   renderActivityFeed();
+  renderStreak();
 }
 
 function calculateStats() {
@@ -736,6 +881,7 @@ function toggleTaskComplete(id) {
   if (t.completed) {
     t.kanbanStatus = 'done';
     playSuccessBell();
+    updateStreakOnCompletion();
     logActivity(`Completed task: ${t.title}`, 'completed');
     showToast(`Task completed successfully`);
   } else {
@@ -1285,9 +1431,11 @@ function purgeWorkspace() {
   if (confirm("Are you sure you want to permanently erase this workspace? This will purge all tasks and log files.")) {
     tasks = [];
     activityLog = [{ text: "Workspace fully purged & reset", type: "deleted", time: Date.now() }];
+    streak = { count: 0, lastActiveDate: null, history: [] };
     
     saveTasks();
     saveActivity();
+    saveStreak();
     
     showToast('Workspace purged', 'danger');
     
