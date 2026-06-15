@@ -14,7 +14,7 @@ A luxury, dark-mode single-page productivity dashboard built using clean HTML5, 
   - Standard CRUD task management.
   - Custom checkboxes with fluid draw animations. 
   - Prioritization labels (High/Medium/Low), category tags, and relative due dates.
-  - Multi-condition sort (Date/Priority/Name) and search filters. 
+  - Multi-condition sort (Date/Priority/Name) and search filters.  
 - **Kanban Board:**
   - 4 columns (To Do, In Progress, Review, Done) with colored top border glows.
   - Full drag-and-drop support built on native HTML5 Drag and Drop APIs.
