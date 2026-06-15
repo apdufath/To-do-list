@@ -12,7 +12,7 @@ A luxury, dark-mode single-page productivity dashboard built using clean HTML5, 
   - Quick-add capture input and a sliding activity feed log.
 - **Tasks Workspace:**
   - Standard CRUD task management.
-  - Custom checkboxes with fluid draw animations.
+  - Custom checkboxes with fluid draw animations. 
   - Prioritization labels (High/Medium/Low), category tags, and relative due dates.
   - Multi-condition sort (Date/Priority/Name) and search filters.
 - **Kanban Board:**
