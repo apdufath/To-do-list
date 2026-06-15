@@ -7,7 +7,7 @@ A luxury, dark-mode single-page productivity dashboard built using clean HTML5, 
 - **SPA Routing Engine:** Fast, client-side routing with smooth fade-and-slide page transitions.
 - **Dashboard (Home View):** 
   - Dynamic greetings and motivational quotes.
-  - Interactive SVG completion rings for today's intentions.
+  - Interactive SVG completion rings for today's intentions. 
   - Live metric summaries (Total, Completed, In Progress, Overdue).
   - Quick-add capture input and a sliding activity feed log.
 - **Tasks Workspace:**
