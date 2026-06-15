@@ -30,7 +30,7 @@ A luxury, dark-mode single-page productivity dashboard built using clean HTML5, 
 
 ## 📁 Repository Structure
 
-```
+``` 
 To-do List/
 │
 ├── index.html   # Main structural skeleton, SVGs, and modal panels
