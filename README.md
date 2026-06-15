@@ -20,7 +20,7 @@ A luxury, dark-mode single-page productivity dashboard built using clean HTML5, 
   - Full drag-and-drop support built on native HTML5 Drag and Drop APIs.
   - Live column card trackers and inline column quick adders.
 - **Calendar View:**
-  - Interactive monthly calendar with priority-colored dot notifications.
+  - Interactive monthly calendar with priority-colored dot notifications. 
   - Selected day task detail panel.
 - **Settings Workspace:**
   - Theme Accent Engine (Dynamically updates primary and shadow colors in CSS variables between Vivid Yellow and Fresh Green).
