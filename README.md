@@ -16,7 +16,7 @@ A luxury, dark-mode single-page productivity dashboard built using clean HTML5, 
   - Prioritization labels (High/Medium/Low), category tags, and relative due dates.
   - Multi-condition sort (Date/Priority/Name) and search filters.  
 - **Kanban Board:**
-  - 4 columns (To Do, In Progress, Review, Done) with colored top border glows.
+  - 4 columns (To Do, In Progress, Review, Done) with colored top border glows. 
   - Full drag-and-drop support built on native HTML5 Drag and Drop APIs.
   - Live column card trackers and inline column quick adders.
 - **Calendar View:**
