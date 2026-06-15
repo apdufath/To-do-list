@@ -2,7 +2,6 @@
 
 A luxury, dark-mode single-page productivity dashboard built using clean HTML5, modern CSS3 variables/effects, and Vanilla Javascript.
 
-![Aura Dashboard Concept](https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop)
  
 ## ✨ Features     
     
